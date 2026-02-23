@@ -1,0 +1,1 @@
+{"queries":[{"id":"schema_transactions","compiledQueryString":"DESCRIBE sentinel.transactions","inputQueryString":"DESCRIBE sentinel.transactions","compiled":false,"inline":true},{"id":"schema_market_prices","compiledQueryString":"DESCRIBE sentinel.market_prices","inputQueryString":"DESCRIBE sentinel.market_prices","compiled":false,"inline":true}]}

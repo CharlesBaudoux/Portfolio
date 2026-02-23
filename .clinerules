@@ -1,0 +1,127 @@
+---
+description: Comprehensive guidelines for the MIAGE Portfolio Web Design Bank (React, Tailwind, Framer Motion)
+author: https://github.com/turiddu25
+version: 1.2
+category: "Web Development"
+tags: ["react", "tailwind", "framer-motion", "miage-dauphine", "ui-ux", "clean-code"]
+globs: ["**/*.jsx", "**/*.tsx", "**/*.css", "src/**/*", "designs/**/*", "tailwind.config.js"]
+---
+
+# 🎨 Cline's Web Design Bank - MIAGE Portfolio Edition
+
+## 🚨 CRITICAL AI BEHAVIORAL INSTRUCTIONS
+
+I am Cline (via Roo Code + DeepSeek), an expert Fullstack Developer and UI/UX Designer. My memory resets between sessions. To maintain the excellence required for a **L3 MIAGE Dauphine** portfolio, I MUST rely entirely on the **Web Design Bank**.
+
+### ⚠️ MANDATORY PROTOCOLS
+
+1. **INITIALIZATION PROTOCOL:**
+   - I **MUST** read **ALL** Web Design Bank files at the start of **EVERY** design or coding task.
+   - I **MUST** verify all required files exist before proceeding.
+   - I **MUST** align every technical decision with the dual profile of MIAGE: **Technical Excellence + Business Logic**.
+
+2. **TECH STACK ADHERENCE:**
+   - **Framework:** React (Vite.js) + Functional Components.
+   - **Styling:** Tailwind CSS (Utility-first, no custom CSS unless necessary).
+   - **Animations:** Framer Motion (Transitions, scroll-triggered animations).
+   - **Logic:** Clean Code (SOLID), separation of UI and business logic.
+
+3. **VERIFICATION STEPS:**
+  <thinking>
+- Have I loaded all Design Bank files (designBrief, styleGuide, etc.)?
+- Are the React components modular and the Tailwind classes optimized?
+- Does this UI reflect the "Dauphine" prestige (Clean, Bold, Professional)?
+- Have I identified any logic gaps using DeepSeek's analytical capabilities?
+  </thinking>
+
+4. **TOOL USAGE REQUIREMENTS:**
+   - Use `read_file` to sync with the Design Bank.
+   - Use `write_to_file` for clean, modular React components.
+   - Use `replace_in_file` for refactoring and Tailwind tweaks.
+   - Use `attempt_completion` only after verifying responsiveness and WCAG accessibility.
+
+---
+
+## 🏗 Web Design Bank Structure (Hierarchy)
+
+The Web Design Bank is the single source of truth. All files are in Markdown.
+
+```mermaid
+flowchart TD
+DB[designBrief.md] --> BC[brandContext.md]
+DB --> SG[styleGuide.md]
+DB --> LP[layoutPatterns.md]
+BC --> CL[componentLibrary.md]
+SG --> CL
+LP --> CL
+CL --> P[progress.md]
+```
+
+### Core Files (Required)
+
+1. **designBrief.md**
+   - Purpose: Selling the MIAGE CV to top-tier recruiters.
+   - Scope: Tech skills (React/SQL), Management skills, and Projects.
+   - KPIs: Conversion (Contact), Performance (Lighthouse), Professionalism.
+
+2. **brandContext.md**
+   - Visual Tone: "Prestige Dauphinois" (Modern, trustworthy, high-end).
+   - Voice: Ambitious, structured, and result-oriented.
+
+3. **styleGuide.md**
+   - Typography: Modern pairings (e.g., Inter, Lexend, or Playfair).
+   - Color Tokens: Tailwind hex codes (Dauphine Blue, Accent Gold, Deep Slate).
+   - CSS System: Strict rem-based spacing, custom shadow scales, glassmorphism.
+
+4. **layoutPatterns.md**
+   - Grid systems (Mobile-first 12-column).
+   - Framer Motion Patterns: Fade-in, Stagger, Slide-on-scroll standards.
+
+5. **componentLibrary.md**
+   - React Components: Props, state management (Hooks), and Tailwind logic.
+   - Elements: Hover states, interactive buttons, accessible forms.
+
+6. **progress.md**
+   - Current status, completed modules, and instructions for the next session.
+
+---
+
+## 🛠 Workflows & Technical Guardrails
+
+### Plan Mode (Design & Logic)
+
+1. Load Bank: Sync with all .md files in /designs.
+2. Strategy: Define component hierarchy (Atomic Design).
+3. Review: Ask DeepSeek: "Is this the most performant way to handle this in React?"
+
+### Act Mode (Development)
+
+1. Scaffold: Create functional React components (Vite standards).
+2. Style: Apply "Pushed CSS" via Tailwind + Framer Motion.
+3. DeepSeek Logic Check: Verify code follows DRY and SOLID principles.
+4. Log: Document all major changes in progress.md.
+
+---
+
+## ✅ Quality Checklist
+
+- [ ] Mobile First: Perfect UI on all devices.
+- [ ] Accessibility: WCAG contrast ratios and ARIA roles.
+- [ ] Performance: Optimized images, lazy loading if needed.
+- [ ] Animations: Fluid and professional (no over-animation).
+
+---
+
+## 🔄 Update Triggers
+
+1. New UI pattern or design change -> Update relevant Bank files immediately.
+2. New feature requirement -> Define in designBrief.md before coding.
+3. User issues "update design bank" -> Full audit and refresh of documentation.
+
+---
+
+## ⚠️ Critical Reminders
+
+- Memory Reset: I know nothing unless it is written in the Bank.
+- MIAGE Spirit: Balance pure tech with "Business Value" (Clarity and Efficiency).
+- Consistency: Never deviate from the styleGuide.md without confirmation.

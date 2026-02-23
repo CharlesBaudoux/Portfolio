@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStream Analytics - Étude de Cas Power BI | Charles Baudoux</title>
+    <meta name="description" content="Étude de cas Data Analytics réalisée par Charles Baudoux, étudiant L3 MIAGE à Paris Dauphine. Modélisation Power BI, analyse de churn et recommandations stratégiques pour une SaaS fictive.">
+    <!-- Tailwind CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Police Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 116, 139, 0.2);
+        }
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-slate-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3">
+            <button onclick="window.top.location.href = window.location.origin + '/'; return false;" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors bg-transparent border-none cursor-pointer">
+                <i class="fas fa-arrow-left mr-2"></i>
+                <span>Retour au portfolio principal</span>
+            </button>
+        </div>
+    </header>	
+    <main class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Section Hero -->
+        <section id="hero" class="mb-16 mt-8">
+            <!-- Badge / Surtitre -->
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-900/30 border border-blue-700/50 text-blue-300 mb-6">
+                <i class="fas fa-database mr-2"></i>
+                <span class="text-sm font-semibold">Projet Data | Réalisé par Charles Baudoux - L3 MIAGE Paris Dauphine</span>
+            </div>
+
+            <!-- Titre principal -->
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                TechStream Analytics : <span class="gradient-text">Transformer les données SaaS en décisions stratégiques.</span>
+            </h1>
+
+            <!-- Sous-titre -->
+            <p class="text-xl text-gray-300 mb-10 max-w-3xl">
+                Modélisation, DAX complexe et diagnostic d'attrition (Churn) sur une cohorte de 200 clients B2B et B2C.
+            </p>
+
+            <!-- Tags techniques -->
+            <div class="flex flex-wrap gap-3 mb-8">
+                <span class="px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-gray-300 flex items-center">
+                    <i class="fas fa-chart-bar text-blue-400 mr-2"></i> Power BI
+                </span>
+                <span class="px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-gray-300 flex items-center">
+                    <i class="fas fa-code-branch text-green-400 mr-2"></i> Power Query (ETL)
+                </span>
+                <span class="px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-gray-300 flex items-center">
+                    <i class="fas fa-star text-yellow-400 mr-2"></i> Modélisation en Étoile
+                </span>
+                <span class="px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-gray-300 flex items-center">
+                    <i class="fas fa-calculator text-purple-400 mr-2"></i> DAX Avancé
+                </span>
+            </div>
+
+            <!-- Bouton de téléchargement Dataset -->
+            <div class="mt-6 mb-8">
+                <a href="techstream_raw_data.csv" download class="inline-flex items-center gap-2 px-5 py-3 border border-gray-400 rounded-xl text-white hover:bg-gray-800 hover:border-gray-300 transition-colors bg-gray-900/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    Télécharger le Dataset Fictif (CSV)
+                </a>
+                <p class="text-gray-300 text-sm mt-2">Données synthétiques utilisées pour cette analyse (200 lignes, 12 colonnes)</p>
+            </div>
+
+            <!-- Séparateur -->
+            <div class="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-12"></div>
+        </section>
+
+        <!-- Section Vidéo -->
+        <section id="video" class="mb-20">
+            <h2 class="text-3xl font-bold mb-6 flex items-center">
+                <i class="fas fa-play-circle text-blue-400 mr-3"></i> Démonstration Interactive
+            </h2>
+            <p class="text-gray-300 mb-8 max-w-3xl">
+                Présentation du Dashboard Power BI avec filtres dynamiques, tooltips contextuels et variations des KPIs en temps réel.
+            </p>
+            
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-800 hover-glow transition-shadow duration-300">
+                <video 
+                    src="présentation_Power_Bi.mp4" 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline 
+                    class="w-full h-auto"
+                    poster="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+                >
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+                <!-- Overlay de contrôle -->
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="text-white">
+                            <i class="fas fa-sync-alt mr-2"></i> Lecture en boucle
+                        </div>
+                        <div class="text-white text-sm">
+                            <i class="fas fa-volume-mute mr-2"></i> Son désactivé
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-gray-300 text-sm mt-4 text-center">
+                Aperçu interactif du Dashboard Power BI - Filtres dynamiques, tooltips et variations des KPIs.
+            </p>
+        </section>
+
+        <!-- Section Résumé Exécutif -->
+        <section id="executive" class="mb-20">
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-blue-500">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-file-alt text-blue-400 mr-3"></i> Résumé Exécutif
+                </h2>
+                <blockquote class="text-xl text-gray-300 italic border-l-4 border-gray-600 pl-6 py-2">
+                    "L'analyse des 200 clients révèle une situation critique cachée par des moyennes trompeuses. Si notre taux de désabonnement (Churn) global semble être de 36%, ce chiffre cache une fracture totale entre nos produits : notre offre Premium fidélise parfaitement, tandis que l'offre Basic est massivement rejetée par les utilisateurs."
+                </blockquote>
+                <div class="mt-6 flex items-center text-gray-300">
+                    <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                    <span class="text-sm">Insight clé : La moyenne globale peut cacher des problèmes structurels majeurs.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Analyse (3 cards) -->
+        <section id="analysis" class="mb-20">
+            <h2 class="text-3xl font-bold mb-10 text-center">Analyse Détaillée</h2>
+            <p class="text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+                Quatre insights stratégiques extraits de l'analyse des données, permettant de comprendre les dynamiques sous-jacentes.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-6 border border-cyan-800/30 hover:border-cyan-500/50 transition-all hover-glow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-cyan-900/30 flex items-center justify-center mr-4">
+                            <i class="fas fa-exclamation-triangle text-2xl text-cyan-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">🚨 L'illusion de la moyenne (36%)</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        En regardant le chiffre global, un Churn de 36% est inquiétant mais gérable. Cependant, l'analyse par segment prouve que ce chiffre est biaisé. Le volume important de nos clients Premium (très fidèles) tire la moyenne vers le bas et masque la réalité du terrain sur l'entrée de gamme.
+                    </p>
+                    <div class="mt-6 pt-4 border-t border-gray-800">
+                        <span class="text-sm text-cyan-300 font-semibold">IMPLICATION BUSINESS</span>
+                        <p class="text-sm text-gray-300 mt-1">Ne jamais se fier aux chiffres globaux sans segmentation approfondie.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-6 border border-amber-800/30 hover:border-amber-500/50 transition-all hover-glow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-amber-900/30 flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line-down text-2xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">📉 L'effondrement de l'offre Basic (86%)</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        C'est la découverte majeure de ce tableau de bord : 86% des clients ayant souscrit au produit 'Basic' nous quittent. Cela signifie que près de 9 clients sur 10 abandonnent la solution. L'offre ne correspond pas au marché ou le logiciel est trop complexe à utiliser sans accompagnement.
+                    </p>
+                    <div class="mt-6 pt-4 border-t border-gray-800">
+                        <span class="text-sm text-amber-300 font-semibold">IMPLICATION BUSINESS</span>
+                        <p class="text-sm text-gray-300 mt-1">Arrêter immédiatement les investissements marketing sur cette offre et investiguer les causes de l'échec.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-6 border border-emerald-800/30 hover:border-emerald-500/50 transition-all hover-glow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-900/30 flex items-center justify-center mr-4">
+                            <i class="fas fa-gem text-2xl text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">💎 La force des offres Pro & Premium (15% et 0%)</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        À l'inverse, l'offre Pro maintient un taux de départ tout à fait correct de 15%, et l'offre Premium (Enterprise) approche les 0%. Notre modèle économique (Product-Market Fit) n'est pas fait pour le grand public, il est clairement taillé pour le B2B haut de gamme.
+                    </p>
+                    <div class="mt-6 pt-4 border-t border-gray-800">
+                        <span class="text-sm text-emerald-300 font-semibold">IMPLICATION BUSINESS</span>
+                        <p class="text-sm text-gray-300 mt-1">Doubler les efforts sur les segments Enterprise et Pro, qui garantissent la pérennité de l'entreprise.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card rounded-2xl p-6 border border-blue-800/30 hover:border-blue-500/50 transition-all hover-glow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-900/30 flex items-center justify-center mr-4">
+                            <i class="fas fa-globe-americas text-2xl text-blue-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">🌍 Paradoxe Géographique : La locomotive Française</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Sur un CA total de 234,5 K$, la France domine en générant 31,5% des revenus avec une rétention exceptionnelle (Taux de Churn à seulement 9,1%). À l'inverse, les USA (2e marché avec 20% du CA) détruisent de la valeur avec une hémorragie record : 55,8% des clients américains nous quittent. L'acquisition aux USA est un gouffre financier.
+                    </p>
+                    <div class="mt-6 pt-4 border-t border-gray-800">
+                        <span class="text-sm text-blue-300 font-semibold">IMPLICATION BUSINESS</span>
+                        <p class="text-sm text-gray-300 mt-1">Réallouer le budget marketing des USA vers la France et l'Europe, où la rentabilité est prouvée.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Recommandations Stratégiques -->
+        <section id="recommendations" class="mb-20">
+            <h2 class="text-3xl font-bold mb-10 text-center">Recommandations Stratégiques pour le COMEX</h2>
+            <p class="text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+                Trois actions prioritaires issues de l'analyse data‑driven pour optimiser la rentabilité et réduire l'attrition.
+            </p>
+            
+            <div class="space-y-8 max-w-4xl mx-auto">
+                <!-- Recommandation 1 -->
+                <div class="glass-card rounded-xl p-6 border border-blue-800/30">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-900/40 flex items-center justify-center mr-6">
+                            <span class="text-2xl font-bold text-blue-300">1</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3 text-blue-300">Couper les publicités sur l'offre Basic</h3>
+                            <p class="text-gray-300">
+                                Inutile d'investir pour acquérir des clients qui partent immédiatement. Les coûts d'acquisition dépassent la valeur à vie de ces clients. Rediriger les ressources vers le <span class="font-semibold">renforcement de la rétention Enterprise</span>.
+                            </p>
+                            <div class="mt-4 flex items-center text-gray-300">
+                                <i class="fas fa-chart-line text-blue-400 mr-2"></i>
+                                <span class="text-sm">Impact estimé : +15% de marge opérationnelle en 6 mois</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommandation 2 -->
+                <div class="glass-card rounded-xl p-6 border border-purple-800/30">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-900/40 flex items-center justify-center mr-6">
+                            <span class="text-2xl font-bold text-purple-300">2</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3 text-purple-300">Contacter les 86% de partants</h3>
+                            <p class="text-gray-300">
+                                Lancer un sondage d'urgence pour comprendre pourquoi ils n'arrivent pas à utiliser l'outil. Mettre en place des parcours guidés, des tutoriels interactifs et un support proactif pour réduire la friction initiale.
+                            </p>
+                            <div class="mt-4 flex items-center text-gray-300">
+                                <i class="fas fa-user-check text-purple-400 mr-2"></i>
+                                <span class="text-sm">Objectif : réduire le churn premier mois de 86% à 30%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommandation 3 -->
+                <div class="glass-card rounded-xl p-6 border border-green-800/30">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-900/40 flex items-center justify-center mr-6">
+                            <span class="text-2xl font-bold text-green-300">3</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3 text-green-300">Assumer un statut 100% B2B</h3>
+                            <p class="text-gray-300">
+                                Concentrer toute la stratégie de l'entreprise sur les offres Pro et Premium qui génèrent une rentabilité stable. Repositionner la marque, adapter le messaging marketing et restructurer l'équipe commerciale vers un modèle B2B pur.
+                            </p>
+                            <div class="mt-4 flex items-center text-gray-300">
+                                <i class="fas fa-bullseye text-green-400 mr-2"></i>
+                                <span class="text-sm">Horizon : transition sur 12-18 mois</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-slate-900 border-t border-gray-800 mt-20">
+        <div class="container mx-auto px-4 py-16 max-w-4xl">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold mb-6 text-slate-400">Prêt à faire parler vos données ?</h2>
+                <p class="text-xl text-slate-500 mb-10 max-w-2xl mx-auto">
+                    Je suis activement à la recherche d'une opportunité en Data. Passionné par l'analyse business et la visualisation de données, je souhaite mettre mes compétences au service de projets à impact.
+                </p>
+                
+                <!-- Coordonnées -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-12">
+                    <div class="flex items-center text-slate-500">
+                        <div class="w-12 h-12 rounded-full bg-blue-900/30 flex items-center justify-center mr-4">
+                            <i class="fas fa-phone text-slate-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Téléphone</p>
+                            <p class="text-xl font-semibold text-slate-400">06 16 76 29 23</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center text-slate-500">
+                        <div class="w-12 h-12 rounded-full bg-blue-900/30 flex items-center justify-center mr-4">
+                            <i class="fas fa-envelope text-slate-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Email</p>
+                            <p class="text-xl font-semibold text-slate-400">charlesbaudoux92@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bouton CTA -->
+                <a href="mailto:charlesbaudoux92@gmail.com"
+                   class="inline-flex items-center px-8 py-4 rounded-xl border border-slate-600 bg-slate-800/50 text-slate-400 font-bold text-lg hover:bg-slate-700/50 hover:text-slate-300 hover:border-slate-500 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-paper-plane mr-3"></i> Me contacter par email
+                </a>
+                
+                <!-- Mention -->
+                <p class="text-slate-500 text-sm mt-12 pt-6 border-t border-slate-700">
+                    © 2025 Charles Baudoux - Étudiant L3 MIAGE à l'Université Paris Dauphine<br>
+                    Cette étude de cas est une démonstration de compétences en Business Intelligence et Data Visualization.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Ajout d'un effet de scroll fluide pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation simple pour les cards au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, observerOptions);
+
+        // Observer les cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

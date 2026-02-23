@@ -1,0 +1,1 @@
+[{"name":"timestamp","evidenceType":"date","typeFidelity":"precise"},{"name":"asset_id","evidenceType":"string","typeFidelity":"precise"},{"name":"market_price","evidenceType":"number","typeFidelity":"precise"}]
