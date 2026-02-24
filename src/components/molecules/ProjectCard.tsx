@@ -47,6 +47,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     // (ce cas ne devrait pas se produire avec les données actuelles)
   };
 
+  // Déterminer si ce projet est le portfolio actuel
+  const isCurrentPortfolio = title.toLowerCase().includes('portfolio') || link === '#';
+
   return (
     <motion.div
       whileHover={{ y: -8 }}
@@ -85,16 +88,27 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           ))}
         </div>
 
-        {/* Bouton d'action */}
+        {/* Bouton d'action ou indicateur "Site Actuel" */}
         <div className="mt-auto">
-          <a
-            href={link}
-            onClick={handleClick}
-            className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-accent border border-purple-accent text-purple-accent hover:bg-purple-900/30 py-2 px-4 text-sm w-full"
-          >
-            <Icon name="external" size={16} className="mr-2" />
-            Voir le projet
-          </a>
+          {isCurrentPortfolio ? (
+            <div className="flex justify-center items-center py-2 px-4">
+              <Badge
+                label="Site Actuel"
+                color="gold"
+                size="md"
+                className="border-2 border-accent-gold bg-accent-gold/10 text-accent-gold font-semibold"
+              />
+            </div>
+          ) : (
+            <a
+              href={link}
+              onClick={handleClick}
+              className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-accent border border-purple-accent text-purple-accent hover:bg-purple-900/30 py-2 px-4 text-sm w-full"
+            >
+              <Icon name="external" size={16} className="mr-2" />
+              Voir le projet
+            </a>
+          )}
         </div>
       </div>
     </motion.div>

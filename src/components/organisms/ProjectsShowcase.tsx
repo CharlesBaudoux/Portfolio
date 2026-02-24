@@ -5,12 +5,11 @@ import ProjectCard from '../molecules/ProjectCard';
 const ProjectsShowcase: React.FC = () => {
   const projects = [
     {
-      title: 'Conception d’un Portfolio Web Interactif',
-      description: 'Vitrine interactive détaillant l’ensemble de mes projets. Stack React/Tailwind propulsée par des agents IA autonomes sous contexte strict.',
-      technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'TypeScript'],
-      image: './Image_Portfolio.png', // placeholder, à remplacer par une image de projet
-      link: '#', // Lien interne (c’est le portfolio lui‑même)
-      featured: true,
+      title: 'Dashboard de Détection de Fraudes Financières (SQL, BI‑as‑Code)',
+      description: 'Monitoring identifiant les anomalies de marché. Exploitation de fonctions SQL analytiques sous DuckDB et Evidence.dev.',
+      technologies: ['SQL', 'DuckDB', 'Evidence.dev', 'DataViz'],
+      image: './Projet_SQL.png', // placeholder
+      link: '/projets/sql-sentinel-dashboard/index.html',
     },
     {
       title: 'Simulation et optimisation budgétaire d’une ville (JAVA)',
@@ -27,18 +26,19 @@ const ProjectsShowcase: React.FC = () => {
       link: '/projets/python-labyrinthe-game/index.html',
     },
     {
-      title: 'Dashboard de Détection de Fraudes Financières (SQL, BI‑as‑Code)',
-      description: 'Monitoring identifiant les anomalies de marché. Exploitation de fonctions SQL analytiques sous DuckDB et Evidence.dev.',
-      technologies: ['SQL', 'DuckDB', 'Evidence.dev', 'DataViz'],
-      image: './Projet_SQL.png', // placeholder
-      link: '/projets/sql-sentinel-dashboard/index.html',
-    },
-    {
       title: 'Data Analytics : Analyse de Churn & Modélisation (PowerBi)',
       description: 'Dashboard analytique complet (ETL, DAX, Data Storytelling) pour une entreprise SaaS fictive.',
       technologies: ['Power BI', 'DAX', 'ETL', 'Data Storytelling'],
       image: './PowerBi_Portfolio.png',
       link: '/projets/powerbi-churn-analysis/case-study.html',
+    },
+    {
+      title: 'Conception d’un Portfolio Web Interactif',
+      description: 'Vitrine interactive détaillant l’ensemble de mes projets. Stack React/Tailwind propulsée par des agents IA autonomes sous contexte strict.',
+      technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'TypeScript'],
+      image: './Image_Portfolio.png', // placeholder, à remplacer par une image de projet
+      link: '#', // Lien interne (c’est le portfolio lui‑même)
+      featured: true,
     },
   ];
 
