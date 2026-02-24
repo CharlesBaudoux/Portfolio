@@ -17,8 +17,9 @@ const SkillsGrid: React.FC = () => {
     ],
     data: [
       { name: 'PowerBI', level: 4, iconName: 'powerbi' as IconProps['name'] },
-      { name: 'Numpy', level: 3, iconName: 'numpy' as IconProps['name'] },
-      { name: 'Pack Office', level: 5, iconName: 'chart' as IconProps['name'] },
+      { name: 'R', level: 3, iconName: 'powerbi' as IconProps['name'] },
+      { name: 'Numpy', level: 5, iconName: 'numpy' as IconProps['name'] },
+      { name: 'Pack Office', level: 4, iconName: 'chart' as IconProps['name'] },
       { name: 'Pandas', level: 4, iconName: 'chart' as IconProps['name'] },
     ],
     soft: [
