@@ -110,6 +110,19 @@ td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
 tbody tr:last-child td { border-bottom:0; }
 
 /* ----------------------------------------------------------------- statut */
+.stack { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+.stack span { font-size:12.5px; padding:3px 10px; border-radius:999px;
+  border:1px solid var(--grid); color:var(--ink-2); background:var(--surface); }
+.role { margin-top:14px; font-size:15px; color:var(--ink-2); max-width:62ch; }
+details.more { margin-top:14px; border-top:1px solid var(--grid); padding-top:10px; }
+details.more > summary { cursor:pointer; font-size:14px; color:var(--ink-2);
+  list-style:none; display:flex; align-items:center; gap:7px; }
+details.more > summary::-webkit-details-marker { display:none; }
+details.more > summary::before { content:"▸"; color:var(--muted); }
+details.more[open] > summary::before { content:"▾"; }
+details.more > summary:hover { color:var(--ink); }
+details.more[open] > summary { margin-bottom:10px; }
+details.more section { margin-top:0; }
 .tag { display:inline-flex; align-items:center; gap:6px; font-size:12.5px;
        font-weight:600; padding:2px 9px; border-radius:999px;
        border:1px solid var(--ring); }
@@ -228,38 +241,37 @@ footer { margin-top:56px; padding-top:20px; border-top:1px solid var(--grid);
 
   <header>
     <h1>SentinelSQL&nbsp;v2</h1>
-    <p class="lede">Détection de manipulation de marché en temps réel — anneaux de
-    wash trading, pics de volume, divergences de prix, layering. Le flux est
-    synthétique et <strong>étiqueté</strong> : chaque manipulation injectée est
-    connue, donc la détection est mesurable.</p>
+    <p class="lede">Détection de manipulation de marché en temps réel. Le wash
+    trading naïf se trouve par une auto-jointure&nbsp;; le vrai passe par des
+    <strong>anneaux de collusion</strong> — A vend à B, B à C, C à A. Chaque
+    transaction est irréprochable, seule la structure du graphe trahit la
+    manipulation. Il faut donc détecter un cycle dans un graphe temporel
+    glissant, en flux, sous contrainte mémoire.</p>
+
+    <p class="role">Conçu et développé seul, d'un dépôt vide à la mesure —
+    architecture, cœur algorithmique, entrepôt et harnais d'évaluation. Le flux
+    est synthétique et <strong>étiqueté</strong>&nbsp;: chaque manipulation
+    injectée est connue, donc la détection est <em>mesurable</em>, et cette page
+    la mesure sans arrondir en sa faveur.</p>
+
+    <div class="stack">
+      <span>Python</span><span>Kafka / Redpanda</span><span>PyFlink</span>
+      <span>Apache Iceberg</span><span>dbt</span><span>DuckDB</span>
+      <span>Dagster</span><span>Postgres / CDC Debezium</span>
+      <span>Prometheus · Grafana</span><span>Docker</span>
+    </div>
   </header>
 
-  <div class="card verdict">
-    <div>
-      <div class="hero" id="hero">2,9</div>
-      <div class="sub">alertes par manipulation réelle</div>
-    </div>
-    <div>
-      <h3>Toujours pas exploitable en production, et c'est le résultat publié</h3>
-      <p>319 alertes pour 111 manipulations réelles sur six graines. C'est
-      deux cent vingt fois mieux qu'à la première intégration — 643 pour une —
-      mais un analyste trie encore deux alertes inutiles sur trois. <code>wash_ring</code> reste le
-      maillon faible à 26,7&nbsp;% de précision médiane, avec une dispersion qui
-      descend à 13,2&nbsp;% sur la graine la moins favorable. L'écrire autrement
-      trahirait le seul argument que ce projet défend&nbsp;: l'honnêteté de la
-      mesure.</p>
-    </div>
-  </div>
 
   <div class="kpis">
     <div class="card kpi"><div class="v">92,8&nbsp;%</div><div class="k">Rappel agrégé</div>
       <div class="n">103 manipulations sur 111</div></div>
     <div class="card kpi"><div class="v">25&nbsp;228</div><div class="k">Événements / s</div>
       <div class="n">mono-thread, Python pur</div></div>
-    <div class="card kpi"><div class="v">555</div><div class="k">Tests</div>
-      <div class="n">93 % de couverture sur le cœur</div></div>
-    <div class="card kpi"><div class="v">221</div><div class="k">Contrôles dbt</div>
-      <div class="n">22 modèles, 0 erreur</div></div>
+    <div class="card kpi"><div class="v">642</div><div class="k">Tests</div>
+      <div class="n">95 % de couverture sur le cœur</div></div>
+    <div class="card kpi"><div class="v">22</div><div class="k">Modèles dbt</div>
+      <div class="n">bronze → silver → gold, 0 erreur</div></div>
   </div>
 
   <!-- ============================================================== REJEU -->
@@ -404,23 +416,26 @@ footer { margin-top:56px; padding-top:20px; border-top:1px solid var(--grid);
       <div class="warnbox" id="t-note"></div>
     </div>
 
-    <p class="sub" style="margin-top:12px">Rien n'est simulé ici. Les
-    <strong id="t-emb">—</strong> fermetures de cycle embarquées portent les valeurs
-    mesurées par le détecteur réel, et le navigateur rejoue la chaîne complète —
-    critères, récurrence, déduplication, appariement à la vérité terrain.
-    <code>export_tuning.py --verifier</code> contrôle qu'aux valeurs retenues ce
-    rejeu retrouve <em>clé par clé</em> les alertes du détecteur, et les mêmes
-    rappel et précision que le rapport d'évaluation. Sans ce contrôle, les
-    curseurs afficheraient des chiffres plausibles et faux.</p>
-
-    <p class="sub" style="margin-top:10px"><strong>Une séance, pas la ligne de
-    base.</strong> Ce panneau et le rejeu ci-dessus rejouent la même séance, celle
-    de la graine&nbsp;7 — la plus riche des six mesurées, et la seule où un anneau
-    échappe réellement au détecteur. Sa précision de 34,6&nbsp;% n'est pas le
-    chiffre du projet&nbsp;: celui-ci est une médiane sur six graines, affichée
-    juste en dessous avec son étendue. La séance la plus flatteuse des six monte à
-    85,7&nbsp;% — bâtir la page dessus aurait reproduit une erreur de méthode déjà
-    corrigée deux fois ici.</p>
+    <details class="more">
+      <summary>Pourquoi ces curseurs ne mentent pas</summary>
+      <p class="sub" style="margin-top:12px">Rien n'est simulé ici. Les
+      <strong id="t-emb">—</strong> fermetures de cycle embarquées portent les valeurs
+      mesurées par le détecteur réel, et le navigateur rejoue la chaîne complète —
+      critères, récurrence, déduplication, appariement à la vérité terrain.
+      <code>export_tuning.py --verifier</code> contrôle qu'aux valeurs retenues ce
+      rejeu retrouve <em>clé par clé</em> les alertes du détecteur, et les mêmes
+      rappel et précision que le rapport d'évaluation. Sans ce contrôle, les
+      curseurs afficheraient des chiffres plausibles et faux.</p>
+  
+      <p class="sub" style="margin-top:10px"><strong>Une séance, pas la ligne de
+      base.</strong> Ce panneau et le rejeu ci-dessus rejouent la même séance, celle
+      de la graine&nbsp;7 — la plus riche des six mesurées, et la seule où un anneau
+      échappe réellement au détecteur. Sa précision de 34,6&nbsp;% n'est pas le
+      chiffre du projet&nbsp;: celui-ci est une médiane sur six graines, affichée
+      juste en dessous avec son étendue. La séance la plus flatteuse des six monte à
+      85,7&nbsp;% — bâtir la page dessus aurait reproduit une erreur de méthode déjà
+      corrigée deux fois ici.</p>
+    </details>
   </section>
 
   <!-- ============================================================ QUALITÉ -->
@@ -453,21 +468,40 @@ footer { margin-top:56px; padding-top:20px; border-top:1px solid var(--grid);
     <div id="tbl" hidden style="margin-top:12px" class="card"></div>
   </section>
 
-  <!-- ========================================================= TRAJECTOIRE -->
+  <!-- ============================================================== LIMITES -->
   <section>
-    <h2>Trois intégrations</h2>
-    <p class="sub">Nombre d'alertes émises pour la même heure de marché. Échelle
-    logarithmique — sans elle, les deux derniers points seraient invisibles.</p>
-    <figure class="card scroll" style="margin-top:14px">
-      <svg id="traj" viewBox="0 0 720 230" role="img"
-           aria-label="Alertes émises aux trois intégrations : 9640, puis 2777, puis 63"></svg>
-    </figure>
-    <p class="sub" style="margin-top:10px">
-      Les deux premiers points sont des mesures sur <em>une</em> graine ; le
-      troisième est une médiane sur six. La méthode a changé en cours de route,
-      précisément parce que la première était insuffisante.
+    <h2>Ce que ces chiffres ne disent pas</h2>
+    <p class="sub">Le rappel est solide. La précision ne l'est pas, et la publier
+    telle quelle est le seul argument que ce projet défend.</p>
+
+  <div class="card verdict" style="margin-top:16px">
+    <div>
+      <div class="hero" id="hero">2,9</div>
+      <div class="sub">alertes par manipulation réelle</div>
+    </div>
+    <div>
+      <h3>Toujours pas exploitable en production, et c'est le résultat publié</h3>
+      <p>319 alertes pour 111 manipulations réelles sur six graines. C'est
+      deux cent vingt fois mieux qu'à la première intégration — 643 pour une —
+      mais un analyste trie encore deux alertes inutiles sur trois. <code>wash_ring</code> reste le
+      maillon faible à 26,7&nbsp;% de précision médiane, avec une dispersion qui
+      descend à 13,2&nbsp;% sur la graine la moins favorable. L'écrire autrement
+      trahirait le seul argument que ce projet défend&nbsp;: l'honnêteté de la
+      mesure.</p>
+    </div>
+  </div>
+
+    <p class="sub" style="margin-top:14px">
+      <strong>Une limite qui ne se corrige pas&nbsp;:</strong> le générateur, les
+      détecteurs et la politique de correspondance sont écrits par la même main.
+      Les chiffres mesurent donc « ce détecteur trouve ce que ce générateur
+      injecte ». Une manipulation d'une forme non anticipée serait invisible
+      <em>et</em> non mesurable. Aucune quantité de tests ne lève cette
+      circularité — seules des données réelles le feraient.
     </p>
   </section>
+
+  <!-- ========================================================= TRAJECTOIRE -->
 
   <!-- ================================================================ GOLD -->
   <section>
@@ -499,44 +533,57 @@ footer { margin-top:56px; padding-top:20px; border-top:1px solid var(--grid);
   </section>
 
   <!-- =============================================================== ÉTAT -->
-  <section>
-    <h2>Vérifié, et jamais exécuté</h2>
-    <p class="sub">La distinction est tenue partout dans le projet. Elle est la
-    seule raison pour laquelle les chiffres ci-dessus valent quelque chose.</p>
-    <div class="grid2" style="margin-top:14px">
-      <div class="card">
-        <span class="tag ok">✓ exécuté et vérifié</span>
-        <ul class="tight">
-          <li>506 tests, 93&nbsp;% de couverture sur le cœur de détection</li>
-          <li><code>dbt build</code> — 22 modèles, 199 tests, 0 erreur</li>
-          <li>Job Flink — même clé d'alerte que le cœur Python pur</li>
-          <li>Générateur déterministe, octet pour octet, à quatre vitesses</li>
-          <li><strong>Pile complète&nbsp;: 9 services sains</strong> — Redpanda,
-              Postgres, Debezium, MinIO, Flink, Prometheus, Grafana</li>
-          <li>CDC vérifié&nbsp;: un <code>UPDATE</code> Postgres arrive dans Kafka,
-              décimaux en clair et non en base64</li>
-        </ul>
+  <details class="more">
+    <summary>La trajectoire du projet : 9&nbsp;640 alertes, puis 2&nbsp;777, puis 63</summary>
+    <section>
+      <h2>Trois intégrations</h2>
+      <p class="sub">Nombre d'alertes émises pour la même heure de marché. Échelle
+      logarithmique — sans elle, les deux derniers points seraient invisibles.</p>
+      <figure class="card scroll" style="margin-top:14px">
+        <svg id="traj" viewBox="0 0 720 230" role="img"
+             aria-label="Alertes émises aux trois intégrations : 9640, puis 2777, puis 63"></svg>
+      </figure>
+      <p class="sub" style="margin-top:10px">
+        Les deux premiers points sont des mesures sur <em>une</em> graine ; le
+        troisième est une médiane sur six. La méthode a changé en cours de route,
+        précisément parce que la première était insuffisante.
+      </p>
+    </section>
+  </details>
+
+  <details class="more">
+    <summary>Ce qui a réellement tourné, et ce qui est écrit sans avoir jamais été lancé</summary>
+    <section>
+      <h2>Vérifié, et jamais exécuté</h2>
+      <p class="sub">La distinction est tenue partout dans le projet. Elle est la
+      seule raison pour laquelle les chiffres ci-dessus valent quelque chose.</p>
+      <div class="grid2" style="margin-top:14px">
+        <div class="card">
+          <span class="tag ok">✓ exécuté et vérifié</span>
+          <ul class="tight">
+            <li>642 tests, 95&nbsp;% de couverture sur le cœur de détection</li>
+            <li><code>dbt build</code> — 22 modèles, 199 tests, 0 erreur</li>
+            <li>Job Flink — même clé d'alerte que le cœur Python pur</li>
+            <li>Générateur déterministe, octet pour octet, à quatre vitesses</li>
+            <li><strong>Pile complète&nbsp;: 9 services sains</strong> — Redpanda,
+                Postgres, Debezium, MinIO, Flink, Prometheus, Grafana</li>
+            <li>CDC vérifié&nbsp;: un <code>UPDATE</code> Postgres arrive dans Kafka,
+                décimaux en clair et non en base64</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag no">✕ écrit, jamais lancé</span>
+          <ul class="tight">
+            <li>Job Flink <em>sur le cluster</em> — il tourne en mini-cluster local</li>
+            <li>Connecteurs Kafka de Flink, points de reprise, parallélisme&nbsp;&gt;&nbsp;1</li>
+            <li><code>IcebergBronzeWriter</code> — les buckets existent, rien n'y est écrit</li>
+            <li>Chemin dbt <em>via la pile</em> — dbt s'exécute en local</li>
+            <li>Reprise sur panne, montée en charge réelle</li>
+          </ul>
+        </div>
       </div>
-      <div class="card">
-        <span class="tag no">✕ écrit, jamais lancé</span>
-        <ul class="tight">
-          <li>Job Flink <em>sur le cluster</em> — il tourne en mini-cluster local</li>
-          <li>Connecteurs Kafka de Flink, points de reprise, parallélisme&nbsp;&gt;&nbsp;1</li>
-          <li><code>IcebergBronzeWriter</code> — les buckets existent, rien n'y est écrit</li>
-          <li>Chemin dbt <em>via la pile</em> — dbt s'exécute en local</li>
-          <li>Reprise sur panne, montée en charge réelle</li>
-        </ul>
-      </div>
-    </div>
-    <p class="sub" style="margin-top:14px">
-      <strong>Une limite qui ne se corrige pas&nbsp;:</strong> le générateur, les
-      détecteurs et la politique de correspondance sont écrits par la même main.
-      Les chiffres mesurent donc « ce détecteur trouve ce que ce générateur
-      injecte ». Une manipulation d'une forme non anticipée serait invisible
-      <em>et</em> non mesurable. Aucune quantité de tests ne lève cette
-      circularité — seules des données réelles le feraient.
-    </p>
-  </section>
+    </section>
+  </details>
 
   <footer>
     Charles Baudoux — MIAGE, Université&nbsp;Paris&nbsp;Dauphine-PSL.

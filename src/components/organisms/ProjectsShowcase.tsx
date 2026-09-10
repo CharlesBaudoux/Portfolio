@@ -22,7 +22,7 @@ const ProjectsShowcase: React.FC = () => {
       highlights: [
         'Redpanda → Flink → Iceberg, dbt (22 modèles), Dagster, Prometheus/Grafana',
         'Détection de cycles dans un graphe temporel glissant, état borné et alertes idempotentes',
-        '11 décisions d’architecture documentées, chacune avec son coût assumé',
+        '642 tests, 95 % de couverture sur le cœur, 11 décisions d’architecture documentées',
         'Rappel et précision mesurés sur 6 graines — jamais sur une seule',
       ],
       technologies: ['Python', 'Kafka', 'Flink', 'dbt', 'DuckDB', 'Iceberg', 'Dagster', 'Docker'],
