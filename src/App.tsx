@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/organisms/Navbar';
 import HeroSection from './components/organisms/HeroSection';
 import SkillsGrid from './components/organisms/SkillsGrid';
+import ExperienceTimeline from './components/organisms/ExperienceTimeline';
 import EducationTimeline from './components/organisms/EducationTimeline';
 import ProjectsShowcase from './components/organisms/ProjectsShowcase';
 import Footer from './components/organisms/Footer';
@@ -35,6 +36,7 @@ function App() {
               <>
                 <HeroSection />
                 <SkillsGrid />
+                <ExperienceTimeline />
                 <EducationTimeline />
                 <ProjectsShowcase />
               </>

@@ -5,9 +5,22 @@ import EducationCard from '../molecules/EducationCard';
 const EducationTimeline: React.FC = () => {
   const educationData = [
     {
-      period: 'Sept. 2025 - Présent',
+      period: 'Sept. 2026 - Août 2027',
       institution: 'Université Paris Dauphine‑PSL',
-      degree: 'L3 MIAGE (Informatique & Gestion)',
+      degree: 'M1 MIAGE — Sciences du Numérique et Management (en alternance)',
+      details: [
+        'Ingénierie des données et systèmes décisionnels',
+        'Architecture des systèmes d’information',
+        'Bases de données avancées',
+        'Gestion de projet et management des SI',
+        'Objectif : M2 MIAGE Informatique Décisionnelle (ID)',
+      ],
+      logo: '/Logo_Dauphine.png',
+    },
+    {
+      period: 'Sept. 2025 - Mai 2026',
+      institution: 'Université Paris Dauphine‑PSL',
+      degree: 'Licence 3 MIAGE (Informatique & Gestion)',
       details: [
         'Ingénierie des systèmes',
         'Finance d’entreprise',
@@ -22,7 +35,7 @@ const EducationTimeline: React.FC = () => {
     {
       period: 'Sept. 2023 - Juin 2025',
       institution: 'Université Paris‑1 Panthéon‑Sorbonne',
-      degree: 'L1/L2 MIASHS ( Mathématiques et Informatique Appliquées aux Sciences Humaines et Sociales',
+      degree: 'L1/L2 MIASHS — Mathématiques et Informatique Appliquées aux Sciences Humaines et Sociales',
       details: [
         'Parcours général en sciences sociales, mathématiques et informatique',
         'Statistiques',

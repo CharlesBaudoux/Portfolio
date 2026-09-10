@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Badge from '../atoms/Badge';
+import type { BadgeProps } from '../atoms/Badge';
 import Icon from '../atoms/Icon';
 import type { IconProps } from '../atoms/Icon';
 
@@ -14,11 +15,11 @@ interface SkillCardProps {
 const SkillCard: React.FC<SkillCardProps> = ({ name, category, iconName }) => {
   const categoryLabels = {
     tech: 'Informatique',
-    data: 'Analyse de données',
+    data: 'Données & décisionnel',
     soft: 'Soft Skills',
   };
 
-  const categoryColors = {
+  const categoryColors: Record<SkillCardProps['category'], BadgeProps['color']> = {
     tech: 'blue',
     data: 'green',
     soft: 'gold',
@@ -37,7 +38,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, category, iconName }) => {
           <h4 className="font-bold text-xl text-text-primary mb-1">{name}</h4>
           <Badge
             label={categoryLabels[category]}
-            color={categoryColors[category] as any}
+            color={categoryColors[category]}
             size="sm"
             className="mt-1"
           />

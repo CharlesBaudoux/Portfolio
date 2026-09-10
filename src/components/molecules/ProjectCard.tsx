@@ -9,6 +9,8 @@ interface ProjectCardProps {
   technologies: string[];
   image?: string; // chemin relatif dans public/
   link: string;
+  github?: string; // URL du dépôt, quand le code est publié
+  highlights?: string[]; // chiffres saillants affichés sous la description
   featured?: boolean;
 }
 
@@ -18,6 +20,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   technologies,
   image,
   link,
+  github,
+  highlights,
   featured = false,
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -70,11 +74,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-2xl font-bold text-text-primary">{title}</h3>
           {featured && (
-            <Badge label="Vitrine" color="purple" size="sm" />
+            <Badge label="Projet phare" color="purple" size="sm" />
           )}
         </div>
 
-        <p className="text-text-secondary mb-4 flex-grow">{description}</p>
+        <p className="text-text-secondary mb-4">{description}</p>
+
+        {/* Chiffres saillants — ce qui distingue une réalisation d'une intention */}
+        {highlights && highlights.length > 0 && (
+          <ul className="mb-4 space-y-1 flex-grow">
+            {highlights.map((h) => (
+              <li key={h} className="flex items-start text-sm text-text-secondary">
+                <Icon name="chevronRight" size={14} className="text-accent-gold mr-2 mt-1 flex-shrink-0" />
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {!highlights && <div className="flex-grow" />}
 
         {/* Technologies */}
         <div className="flex flex-wrap gap-2 mb-6">
@@ -100,14 +117,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               />
             </div>
           ) : (
-            <a
-              href={link}
-              onClick={handleClick}
-              className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-accent border border-purple-accent text-purple-accent hover:bg-purple-900/30 py-2 px-4 text-sm w-full"
-            >
-              <Icon name="external" size={16} className="mr-2" />
-              Voir le projet
-            </a>
+            <div className="flex gap-2">
+              <a
+                href={link}
+                onClick={handleClick}
+                className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-accent border border-purple-accent text-purple-accent hover:bg-purple-900/30 py-2 px-4 text-sm flex-1"
+              >
+                <Icon name="external" size={16} className="mr-2" />
+                Voir le projet
+              </a>
+              {github && (
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-accent border border-border-dark text-text-secondary hover:text-text-primary hover:border-purple-accent py-2 px-4 text-sm"
+                  aria-label={`Code source de ${title} sur GitHub`}
+                >
+                  <Icon name="github" size={16} className="mr-2" />
+                  Code
+                </a>
+              )}
+            </div>
           )}
         </div>
       </div>

@@ -1,73 +1,60 @@
-# React + TypeScript + Vite
+# Portfolio — Charles Baudoux
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vitrine de mes projets d'ingénierie de la donnée et de développement.
+Alternant Data Engineer chez Crédit Agricole S.A., M1 MIAGE à l'Université
+Paris Dauphine‑PSL.
 
-Currently, two official plugins are available:
+[LinkedIn](https://linkedin.com/in/charlesbaudoux) ·
+[GitHub](https://github.com/CharlesBaudoux)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Les projets exposés
 
-## React Compiler
+| Projet | Ce qu'il démontre | Code |
+|---|---|---|
+| **SentinelSQL v2** | Détection de manipulation de marché en flux : Redpanda → Flink → Iceberg, dbt, Dagster. Détection de cycles dans un graphe temporel glissant, 642 tests, métriques mesurées sur 6 graines. | [sentinel-v2](https://github.com/CharlesBaudoux/sentinel-v2) |
+| **SentinelSQL v1** | SQL analytique (CTE, fonctions fenêtrées) exécuté dans le navigateur via DuckDB‑WASM sur des fichiers Parquet, site généré par Evidence.dev. | [dépôt](https://github.com/CharlesBaudoux/Dashboard-de-D-tection-de-Fraudes-Financi-res-SQL-BI-as-Code-) |
+| **Analyse de churn** | Modélisation décisionnelle sous Power BI : ETL Power Query, schéma en étoile, mesures DAX, restitution orientée décision. | — |
+| **Optimisation budgétaire** | Sac à dos multidimensionnel en Java : heuristique gloutonne et Hill Climbing comparées, moteur exécuté dans le navigateur via CheerpJ. | [dépôt](https://github.com/CharlesBaudoux/Simulation_et_optimisation_budg-taire_d_une_ville) |
+| **Labyrinthe 2D** | Jeu Pygame avec collisions pixel‑perfect, porté en WebAssembly via pygbag. | [dépôt](https://github.com/CharlesBaudoux/labyrinthe_python) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Chaque projet est consultable depuis le site ; les pages statiques vivent dans
+`public/projets/` et sont servies telles quelles.
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+React 19, TypeScript, Vite, Tailwind CSS, Framer Motion, React Router.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Les composants suivent une organisation *atomic design* :
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/components/
+├── atoms/       Button, Badge, Icon
+├── molecules/   SkillCard, ProjectCard, EducationCard
+└── organisms/   Navbar, HeroSection, SkillsGrid,
+                 ExperienceTimeline, EducationTimeline,
+                 ProjectsShowcase, ProjectViewer, Footer
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+`EducationCard` sert les deux timelines — expérience et formation — via ses
+props `icon` et `logo`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Développement
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev      # serveur de développement
+npm run build    # tsc -b && vite build -> dist/
+npm run lint
+npm run preview  # servir le build de production localement
 ```
+
+`dist/` est un artefact de build : il est ignoré par git et régénéré à chaque
+`npm run build`.
+
+## Ajouter un projet
+
+1. Déposer la page statique dans `public/projets/<nom-du-projet>/`.
+2. Ajouter une entrée dans le tableau `projects` de
+   `src/components/organisms/ProjectsShowcase.tsx` — `highlights` porte les
+   chiffres saillants, `github` le lien vers le code quand il est publié.
+3. Ajouter une image de couverture dans `public/` et la référencer via `image`.

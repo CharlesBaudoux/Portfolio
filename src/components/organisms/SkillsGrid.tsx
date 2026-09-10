@@ -7,26 +7,29 @@ const SkillsGrid: React.FC = () => {
   const skills = {
     tech: [
       { name: 'Python', level: 5, iconName: 'python' as IconProps['name'] },
+      { name: 'SQL', level: 4, iconName: 'sql' as IconProps['name'] },
       { name: 'Java (POO)', level: 4, iconName: 'java' as IconProps['name'] },
-      { name: 'SQL / PostgreSQL', level: 4, iconName: 'sql' as IconProps['name'] },
-      { name: 'React.js', level: 4, iconName: 'react' as IconProps['name'] },
-      { name: 'Tailwind CSS', level: 5, iconName: 'tailwind' as IconProps['name'] },
-      { name: 'HTML/CSS/JS', level: 5, iconName: 'react' as IconProps['name'] },
+      { name: 'Git / GitHub', level: 4, iconName: 'github' as IconProps['name'] },
       { name: 'Linux', level: 4, iconName: 'linux' as IconProps['name'] },
-      { name: 'C', level: 3, iconName: 'react' as IconProps['name'] },
+      { name: 'React / TypeScript', level: 3, iconName: 'react' as IconProps['name'] },
+      { name: 'Docker', level: 3, iconName: 'work' as IconProps['name'] },
+      { name: 'C', level: 2, iconName: 'project' as IconProps['name'] },
     ],
     data: [
-      { name: 'PowerBI', level: 4, iconName: 'powerbi' as IconProps['name'] },
-      { name: 'R', level: 3, iconName: 'powerbi' as IconProps['name'] },
-      { name: 'Numpy', level: 5, iconName: 'numpy' as IconProps['name'] },
+      { name: 'Modélisation de données', level: 4, iconName: 'chart' as IconProps['name'] },
+      { name: 'MicroStrategy', level: 3, iconName: 'powerbi' as IconProps['name'] },
+      { name: 'Power BI / DAX', level: 3, iconName: 'powerbi' as IconProps['name'] },
+      { name: 'dbt', level: 3, iconName: 'sql' as IconProps['name'] },
+      { name: 'DuckDB', level: 3, iconName: 'sql' as IconProps['name'] },
+      { name: 'Pandas / NumPy', level: 4, iconName: 'numpy' as IconProps['name'] },
+      { name: 'Kafka / Flink', level: 2, iconName: 'chart' as IconProps['name'] },
       { name: 'Pack Office', level: 4, iconName: 'chart' as IconProps['name'] },
-      { name: 'Pandas', level: 4, iconName: 'chart' as IconProps['name'] },
     ],
     soft: [
-      { name: 'Travail en équipe', level: 5, iconName: 'users' as IconProps['name'] },
-      { name: 'Rigoureux', level: 5, iconName: 'work' as IconProps['name'] },
-      { name: 'Sociable', level: 5, iconName: 'users' as IconProps['name'] },
       { name: 'Esprit d\'analyse', level: 5, iconName: 'chart' as IconProps['name'] },
+      { name: 'Rigueur', level: 5, iconName: 'work' as IconProps['name'] },
+      { name: 'Travail en équipe', level: 5, iconName: 'users' as IconProps['name'] },
+      { name: 'Vulgarisation technique', level: 4, iconName: 'users' as IconProps['name'] },
     ],
   };
 
@@ -51,8 +54,8 @@ const SkillsGrid: React.FC = () => {
       >
         <h2 className="text-4xl font-bold text-text-primary mb-4">Compétences</h2>
         <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-          Un profil équilibré entre <span className="font-semibold text-dauphine-blue">expertise technique</span> et{' '}
-          <span className="font-semibold text-accent-gold">aptitudes managériales</span>.
+          Un profil orienté <span className="font-semibold text-dauphine-blue">ingénierie de la donnée</span>, adossé à la{' '}
+          <span className="font-semibold text-accent-gold">compréhension du métier</span>.
         </p>
       </motion.div>
 
@@ -86,7 +89,7 @@ const SkillsGrid: React.FC = () => {
         <div>
           <h3 className="text-2xl font-bold text-green-400 mb-6 flex items-center">
             <span className="bg-green-900/20 p-2 rounded-lg mr-3">📊</span>
-            Analyse de données
+            Données & décisionnel
           </h3>
           <motion.div
             variants={containerVariants}
@@ -101,7 +104,7 @@ const SkillsGrid: React.FC = () => {
                 name={skill.name}
                 category="data"
                 level={skill.level}
-                iconName={skill.iconName as any}
+                iconName={skill.iconName}
               />
             ))}
           </motion.div>
@@ -126,7 +129,7 @@ const SkillsGrid: React.FC = () => {
                 name={skill.name}
                 category="soft"
                 level={skill.level}
-                iconName={skill.iconName as any}
+                iconName={skill.iconName}
               />
             ))}
           </motion.div>

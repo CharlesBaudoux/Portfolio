@@ -2,43 +2,87 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ProjectCard from '../molecules/ProjectCard';
 
+interface Project {
+  title: string;
+  description: string;
+  highlights?: string[];
+  technologies: string[];
+  image?: string;
+  link: string;
+  github?: string;
+  featured?: boolean;
+}
+
 const ProjectsShowcase: React.FC = () => {
-  const projects = [
+  const projects: Project[] = [
     {
-      title: 'Dashboard de Détection de Fraudes Financières (SQL, BI‑as‑Code)',
-      description: 'Monitoring identifiant les anomalies de marché. Exploitation de fonctions SQL analytiques sous DuckDB et Evidence.dev.',
-      technologies: ['SQL', 'DuckDB', 'Evidence.dev', 'DataViz'],
-      image: './Projet_SQL.png', // placeholder
+      title: 'SentinelSQL v2 — Détection de manipulation de marché en flux',
+      description:
+        'Plateforme de surveillance de marché événementielle : détection en flux d’anneaux de wash trading, de layering, de pics de volume et de divergences de prix, avec un harnais d’évaluation qui mesure ce que valent réellement les détecteurs.',
+      highlights: [
+        'Redpanda → Flink → Iceberg, dbt (22 modèles), Dagster, Prometheus/Grafana',
+        'Détection de cycles dans un graphe temporel glissant, état borné et alertes idempotentes',
+        '642 tests, 95 % de couverture sur le cœur de détection, 11 décisions d’architecture documentées',
+        'Rappel et précision mesurés sur 6 graines — jamais sur une seule',
+      ],
+      technologies: ['Python', 'Kafka', 'Flink', 'dbt', 'DuckDB', 'Iceberg', 'Dagster', 'Docker'],
+      link: '/projets/sentinel-v2/index.html',
+      github: 'https://github.com/CharlesBaudoux/sentinel-v2',
+      featured: true,
+    },
+    {
+      title: 'SentinelSQL v1 — Dashboard de détection de fraudes (BI‑as‑Code)',
+      description:
+        'Tableau de bord analytique de surveillance de marché : volumes anormaux, transactions circulaires, écarts de prix. Le SQL s’exécute dans le navigateur, sans serveur d’API.',
+      highlights: [
+        'DuckDB compilé en WebAssembly, données au format Parquet',
+        'SQL analytique : CTE, fonctions fenêtrées, agrégations temporelles',
+        'Site statique généré par Evidence.dev (SvelteKit)',
+      ],
+      technologies: ['SQL', 'DuckDB', 'Evidence.dev', 'Parquet', 'Python'],
+      image: './Projet_SQL.png',
       link: '/projets/sql-sentinel-dashboard/index.html',
+      github: 'https://github.com/CharlesBaudoux/Dashboard-de-D-tection-de-Fraudes-Financi-res-SQL-BI-as-Code-',
     },
     {
-      title: 'Simulation et optimisation budgétaire d’une ville (JAVA)',
-      description: 'Outil d’aide à la décision budgétaire. Application du problème du Sac à dos Multidimensionnel et méthodes de tri Glouton/HillClimbing.',
-      technologies: ['Java', 'Algorithmes', 'Optimisation'],
-      image: './Java_Portfolio.png', // placeholder
-      link: '/projets/java-city-manager/index.html',
-    },
-    {
-      title: 'Développement d’un jeu vidéo 2D modulaire (PYTHON)',
-      description: 'Jeu de labyrinthe (pièges, objets, ennemis) avec moteur Pygame (compilé via Pygbag). Création de session depuis le terminal.',
-      technologies: ['Python', 'Pygame', 'Algorithmes'],
-      image: './labyrinthe.png', // placeholder
-      link: '/projets/python-labyrinthe-game/index.html',
-    },
-    {
-      title: 'Data Analytics : Analyse de Churn & Modélisation (PowerBi)',
-      description: 'Dashboard analytique complet (ETL, DAX, Data Storytelling) pour une entreprise SaaS fictive.',
-      technologies: ['Power BI', 'DAX', 'ETL', 'Data Storytelling'],
+      title: 'Analyse de churn & modélisation décisionnelle (Power BI)',
+      description:
+        'Étude de cas BI sur une entreprise SaaS : comprendre qui part, pourquoi les moyennes trompent, et quelles décisions en tirer.',
+      highlights: [
+        'ETL sous Power Query, modèle sémantique en schéma en étoile',
+        'Mesures et logique temporelle en DAX',
+        'Restitution orientée décision, formulée pour un comité exécutif',
+      ],
+      technologies: ['Power BI', 'Power Query', 'DAX', 'Modélisation', 'Data Storytelling'],
       image: './PowerBi_Portfolio.png',
       link: '/projets/powerbi-churn-analysis/case-study.html',
     },
     {
-      title: 'Conception d’un Portfolio Web Interactif',
-      description: 'Vitrine interactive détaillant l’ensemble de mes projets. Stack React/Tailwind propulsée par des agents IA autonomes sous contexte strict.',
-      technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'TypeScript'],
-      image: './Image_Portfolio.png', // placeholder, à remplacer par une image de projet
-      link: '#', // Lien interne (c’est le portfolio lui‑même)
-      featured: true,
+      title: 'Simulation et optimisation budgétaire d’une ville (Java)',
+      description:
+        'Outil d’aide à la décision : répartir des crédits municipaux entre projets sous contraintes de budget et de politique publique.',
+      highlights: [
+        'Problème du sac à dos multidimensionnel',
+        'Heuristique gloutonne et méta‑heuristique Hill Climbing, comparées',
+        'Exécution du moteur Java dans le navigateur via CheerpJ',
+      ],
+      technologies: ['Java', 'Algorithmique', 'Optimisation', 'React'],
+      image: './Java_Portfolio.png',
+      link: '/projets/java-city-manager/index.html',
+      github: 'https://github.com/CharlesBaudoux/Simulation_et_optimisation_budg-taire_d_une_ville',
+    },
+    {
+      title: 'Jeu de labyrinthe 2D modulaire (Python)',
+      description:
+        'Jeu 2D avec pièges, objets et ennemis, écrit avec Pygame puis porté dans le navigateur.',
+      highlights: [
+        'Détection de collisions par masques pixel‑perfect',
+        'Portage WebAssembly via pygbag',
+      ],
+      technologies: ['Python', 'Pygame', 'WebAssembly'],
+      image: './labyrinthe.png',
+      link: '/projets/python-labyrinthe-game/index.html',
+      github: 'https://github.com/CharlesBaudoux/labyrinthe_python',
     },
   ];
 
@@ -84,6 +128,8 @@ const ProjectsShowcase: React.FC = () => {
             technologies={project.technologies}
             image={project.image}
             link={project.link}
+            github={project.github}
+            highlights={project.highlights}
             featured={project.featured}
           />
         ))}
@@ -96,8 +142,16 @@ const ProjectsShowcase: React.FC = () => {
         className="mt-12 text-center"
       >
         <p className="text-text-secondary mb-6">
-          Chaque projet est documenté et accessible via son dossier statique dans{' '}
-          <code className="bg-card-dark px-2 py-1 rounded border border-border-dark">le lien GitHub sur le CV</code>.
+          Chaque projet est accessible en ligne, et le code source de ceux qui en ont un
+          est publié sur{' '}
+          <a
+            href="https://github.com/CharlesBaudoux"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-purple-accent hover:underline font-semibold"
+          >
+            github.com/CharlesBaudoux
+          </a>.
         </p>
       </motion.div>
     </section>

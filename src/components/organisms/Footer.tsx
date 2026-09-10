@@ -77,7 +77,21 @@ const Footer: React.FC = () => {
                     rel="noopener noreferrer"
                     className="text-gray-300 hover:text-white underline"
                   >
-                    linkedin.com/in/charles_baudoux
+                    linkedin.com/in/charlesbaudoux
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <Icon name="github" size={20} className="mr-4 text-accent-gold" />
+                <div>
+                  <p className="font-semibold">GitHub</p>
+                  <a
+                    href="https://github.com/CharlesBaudoux"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white underline"
+                  >
+                    github.com/CharlesBaudoux
                   </a>
                 </div>
               </div>
@@ -98,7 +112,7 @@ const Footer: React.FC = () => {
         {/* Séparateur */}
         <div className="border-t border-purple-700 pt-8 mt-8 text-center text-gray-400">
           <p className="mb-4">
-            © {new Date().getFullYear()} Charles Baudoux – Portfolio L3 MIAGE Dauphine. Tous droits réservés.
+            © {new Date().getFullYear()} Charles Baudoux – M1 MIAGE, Université Paris Dauphine‑PSL. Tous droits réservés.
           </p>
           <p className="text-sm">
             Conçu avec React, Tailwind CSS et Framer Motion – Déployé avec Vite.

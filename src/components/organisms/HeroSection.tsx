@@ -35,12 +35,17 @@ const HeroSection: React.FC = () => {
 
           {/* Sous‑titre */}
           <p className="text-2xl md:text-3xl text-gray-300 mb-6">
-            Étudiant en <span className="font-semibold text-purple-accent">L3 MIAGE</span> à Paris Dauphine‑PSL
+            Alternant <span className="font-semibold text-purple-accent">Data Engineer</span> chez Crédit Agricole S.A.
           </p>
 
           {/* Accroche */}
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-4">
+            M1 MIAGE à Paris Dauphine‑PSL — Sciences du Numérique
+          </p>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
-            Double compétence <span className="font-semibold text-purple-light">Informatique & Gestion</span> | Passionné par l'algorithmique et la Data.
+            Ingénierie de la donnée : <span className="font-semibold text-purple-light">SQL</span>,{' '}
+            <span className="font-semibold text-purple-light">Python</span>,{' '}
+            <span className="font-semibold text-purple-light">modélisation</span> et mise en production.
           </p>
 
           {/* Call‑to‑Action */}
