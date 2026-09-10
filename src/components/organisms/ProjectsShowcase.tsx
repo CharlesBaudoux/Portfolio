@@ -22,10 +22,11 @@ const ProjectsShowcase: React.FC = () => {
       highlights: [
         'Redpanda → Flink → Iceberg, dbt (22 modèles), Dagster, Prometheus/Grafana',
         'Détection de cycles dans un graphe temporel glissant, état borné et alertes idempotentes',
-        '642 tests, 95 % de couverture sur le cœur de détection, 11 décisions d’architecture documentées',
+        '11 décisions d’architecture documentées, chacune avec son coût assumé',
         'Rappel et précision mesurés sur 6 graines — jamais sur une seule',
       ],
       technologies: ['Python', 'Kafka', 'Flink', 'dbt', 'DuckDB', 'Iceberg', 'Dagster', 'Docker'],
+      image: './Sentinel_V2.png',
       link: '/projets/sentinel-v2/index.html',
       github: 'https://github.com/CharlesBaudoux/sentinel-v2',
       featured: true,
